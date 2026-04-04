@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+python-dotenv
+requests
+numpy
+pandas
+scikit-learn
+xgboost
+joblib
+firebase-admin
+razorpay

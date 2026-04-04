@@ -1,0 +1,18 @@
+{
+  "RED": {
+    "claims": 10,
+    "risk_multiplier": 1.25
+  },
+  "ORANGE": {
+    "claims": 7,
+    "risk_multiplier": 1.1
+  },
+  "YELLOW": {
+    "claims": 4,
+    "risk_multiplier": 0.9
+  },
+  "GREEN": {
+    "claims": 7,
+    "risk_multiplier": 0.8500000000000001
+  }
+}
