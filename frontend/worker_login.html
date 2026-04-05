@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker Login | VITA-INSURATECH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .brand-orange { background-color: #e65a28; }
+        .text-orange-brand { color: #e65a28; }
+        .login-card { box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.1); }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-900 min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="mb-10 flex flex-row items-center justify-center gap-4">
+        <div class="brand-orange p-3 rounded-2xl shadow-lg shadow-orange-200">
+            <i class="fa-solid fa-shield-heart text-white text-3xl"></i>
+        </div>
+        <div class="flex flex-col">
+            <h1 class="text-3xl font-bold tracking-tighter text-slate-800 leading-none">
+                VITA <span class="text-orange-brand uppercase">Worker</span>
+            </h1>
+            <p class="text-gray-400 text-xs font-bold tracking-[0.2em] uppercase mt-1">
+                Partner Portal
+            </p>
+        </div>
+    </div>
+
+    <div class="max-w-md w-full bg-white rounded-[2.5rem] p-8 md:p-10 login-card border border-gray-100">
+        <div class="text-center mb-8">
+            <h2 class="text-2xl font-extrabold text-slate-800">Welcome Back</h2>
+            <p class="text-sm text-gray-500 mt-1">Enter your credentials to continue</p>
+        </div>
+
+        <form action="#" class="space-y-5">
+            <div>
+                <label class="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 ml-1">Registered Phone</label>
+                <div class="flex group">
+                    <span class="flex items-center bg-gray-50 border border-gray-200 border-r-0 rounded-l-2xl px-4 text-gray-500 font-bold group-focus-within:border-orange-500 transition-colors">+91</span>
+                    <input type="tel" 
+                           placeholder="XXXXX XXXXX" 
+                           maxlength="10"
+                           class="w-full p-4 bg-gray-50 border border-gray-200 rounded-r-2xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-bold tracking-wider">
+                </div>
+            </div>
+
+            <div>
+                <div class="flex justify-between items-center mb-2 ml-1">
+                    <label class="block text-[10px] font-black uppercase tracking-widest text-gray-400">Account Password</label>
+                    <a href="#" class="text-[10px] font-bold text-orange-500 uppercase hover:underline">Forgot?</a>
+                </div>
+                <div class="relative group">
+                    <input type="password" 
+                           id="passwordInput"
+                           placeholder="••••••••" 
+                           class="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-orange-500 focus:bg-white transition-all font-medium pr-12">
+                    <button type="button" onclick="togglePassword()" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-orange-500 transition-colors">
+                        <i id="toggleIcon" class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" 
+                    class="w-full py-4 brand-orange text-white font-black rounded-2xl shadow-lg shadow-orange-200 hover:scale-[1.02] active:scale-95 transition-all mt-4 flex items-center justify-center gap-2">
+                SIGN IN <i class="fa-solid fa-arrow-right-long"></i>
+            </button>
+        </form>
+
+        <div class="relative my-10 flex items-center">
+            <div class="flex-grow border-t border-gray-100"></div>
+            <span class="px-4 text-[10px] font-black text-gray-300 uppercase tracking-widest">New to VITA?</span>
+            <div class="flex-grow border-t border-gray-100"></div>
+        </div>
+
+        <div class="text-center">
+            <p class="text-sm text-gray-500 font-medium">Don't have an active cover?</p>
+            <a href="worker_signup.html" class="inline-block mt-3 px-8 py-3 border-2 border-orange-100 text-orange-brand font-extrabold rounded-2xl hover:bg-orange-50 hover:border-orange-200 transition-all">
+                Create New Account
+            </a>
+        </div>
+    </div>
+
+    <div class="mt-8 text-center flex flex-col gap-2">
+        <a href="index.html" class="text-sm text-gray-400 hover:text-gray-600 transition-colors">
+            <i class="fa-solid fa-arrow-left mr-1"></i> Back to Home
+        </a>
+        <a href="about_project.html" class="text-sm text-gray-400 hover:text-orange-500 transition-colors">
+            <i class="fa-solid fa-circle-info mr-1"></i> About Project
+        </a>
+    </div>
+
+    <div class="mt-8 text-center">
+        <div class="flex items-center justify-center gap-2 text-gray-300 mb-2">
+            <i class="fa-solid fa-lock text-[10px]"></i>
+            <span class="text-[10px] font-bold uppercase tracking-widest">Secured by Firebase Auth</span>
+        </div>
+        <p class="text-[9px] text-gray-400 font-medium">Licensed Parametric Provider • &copy; 2026 VITA</p>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('passwordInput');
+            const toggleIcon = document.getElementById('toggleIcon');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        // Handle login form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = document.querySelector('button[type="submit"]');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Signing In...';
+            btn.disabled = true;
+            
+            // Simulate login (mock success)
+            setTimeout(() => {
+                window.location.href = 'workers_dashboard.html';
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>

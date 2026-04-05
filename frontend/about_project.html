@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Project | VITA-INSURATECH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .brand-orange { background-color: #e65a28; }
+        .text-orange-brand { color: #e65a28; }
+        .gradient-bg { background: linear-gradient(135deg, #fef3c7 0%, #fff7ed 50%, #fee2e2 100%); }
+        .layer-card { transition: all 0.3s ease; }
+        .layer-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-900 min-h-screen">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="brand-orange p-2 rounded-lg">
+                        <i class="fa-solid fa-shield-heart text-white"></i>
+                    </div>
+                    <span class="text-xl font-black tracking-tight">VITA <span class="text-orange-brand">INSURATECH</span></span>
+                </a>
+                <div class="flex items-center gap-6">
+                    <a href="index.html" class="text-sm font-semibold text-gray-600 hover:text-orange-brand transition-colors">Home</a>
+                    <a href="worker_login.html" class="text-sm font-semibold text-gray-600 hover:text-orange-brand transition-colors">Worker Login</a>
+                    <a href="about_project.html" class="text-sm font-semibold text-orange-brand">About Project</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg py-20 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/60 rounded-full text-sm font-bold text-orange-600 mb-6">
+                <i class="fa-solid fa-robot"></i> ML-Powered Parametric Insurance
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black text-slate-900 mb-6 leading-tight">
+                Zero-Touch Protection for India's <span class="text-orange-brand">Gig Workers</span>
+            </h1>
+            <p class="text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed">
+                VITA-INSURATECH is a mobile-first, parametric micro-insurance platform built exclusively for Q-Commerce delivery workers. We detect disruptions, validate claims across six independent layers, and process instant payouts — without the worker doing anything at all.
+            </p>
+        </div>
+    </section>
+
+    <!-- Problem Statement -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-black text-slate-900 mb-6">The Problem Nobody Is Solving</h2>
+                    <div class="space-y-4 text-gray-700">
+                        <p>Every morning, thousands of Zepto and Blinkit delivery workers check the sky before their phones. If it's raining hard, they don't work. And if they don't work, they don't eat.</p>
+                        <p>Existing insurance fails this demographic structurally:</p>
+                        <ul class="space-y-2 ml-5">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-xmark text-red-500 mt-1"></i>
+                                <span>Manual claim filing — workers mid-disruption don't open forms</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-xmark text-red-500 mt-1"></i>
+                                <span>Monthly pricing — gig workers earn weekly</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-xmark text-red-500 mt-1"></i>
+                                <span>No coverage for lost working hours from external events</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-br from-orange-50 to-red-50 p-8 rounded-3xl border border-orange-100">
+                    <div class="text-center">
+                        <div class="text-5xl font-black text-orange-brand mb-2">15 Million+</div>
+                        <div class="text-gray-600 font-semibold mb-6">Platform gig workers in India without income protection</div>
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div class="bg-white p-4 rounded-xl">
+                                <div class="text-2xl font-black text-red-600">20-30%</div>
+                                <div class="text-xs text-gray-500">Monthly income loss during disruptions</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl">
+                                <div class="text-2xl font-black text-orange-600">2-4 km</div>
+                                <div class="text-xs text-gray-500">Q-Commerce operating radius</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section class="py-16 px-4 bg-slate-900 text-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-black mb-4">Six-Layer Validation Pipeline</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">From external disruption to instant payout — every claim passes through six independent validation layers before approval.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Layer 1 -->
+                <div class="layer-card bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center font-black text-lg">1</div>
+                        <div class="text-sm font-bold text-blue-400 uppercase">Dynamic Risk Zoning</div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">External Signal Detection</h3>
+                    <p class="text-sm text-gray-400 mb-4">OpenWeather API, AQICN, NewsAPI, and Twitter/X API monitor real-time conditions.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-2 py-1 bg-red-500/20 text-red-400 text-xs rounded">Red: Extreme</span>
+                        <span class="px-2 py-1 bg-orange-500/20 text-orange-400 text-xs rounded">Orange: High</span>
+                        <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded">Yellow: Moderate</span>
+                        <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">Green: Normal</span>
+                    </div>
+                </div>
+
+                <!-- Layer 2 -->
+                <div class="layer-card bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center font-black text-lg">2</div>
+                        <div class="text-sm font-bold text-purple-400 uppercase">Sub-Zone Mapping</div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Cellular Triangulation</h3>
+                    <p class="text-sm text-gray-400 mb-4">50-200 metre grid precision using cellular network data — independent from GPS.</p>
+                    <div class="text-xs text-gray-500">
+                        <i class="fa-solid fa-tower-cell mr-1"></i> Multi-tower overlap positioning
+                    </div>
+                </div>
+
+                <!-- Layer 3 -->
+                <div class="layer-card bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center font-black text-lg">3</div>
+                        <div class="text-sm font-bold text-green-400 uppercase">One-Class SVM</div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Location Validation</h3>
+                    <p class="text-sm text-gray-400 mb-4">Detects GPS spoofing by comparing GPS and cellular coordinates. Flags discrepancies >150m.</p>
+                    <div class="text-xs text-gray-500">
+                        <i class="fa-solid fa-shield-halved mr-1"></i> Pre-trained on synthetic data
+                    </div>
+                </div>
+
+                <!-- Layer 4 -->
+                <div class="layer-card bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-pink-500 rounded-lg flex items-center justify-center font-black text-lg">4</div>
+                        <div class="text-sm font-bold text-pink-400 uppercase">DBSCAN Clustering</div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Fraud Ring Detection</h3>
+                    <p class="text-sm text-gray-400 mb-4">Identifies suspicious claim clusters vs. natural disruption distribution patterns.</p>
+                    <div class="text-xs text-gray-500">
+                        <i class="fa-solid fa-users-viewfinder mr-1"></i> Auto-detects outlier claims
+                    </div>
+                </div>
+
+                <!-- Layer 5 -->
+                <div class="layer-card bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-cyan-500 rounded-lg flex items-center justify-center font-black text-lg">5</div>
+                        <div class="text-sm font-bold text-cyan-400 uppercase">Sensor Fusion</div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">24-Hour Movement Check</h3>
+                    <p class="text-sm text-gray-400 mb-4">Accelerometer, gyroscope, and GPS verify two-wheeler delivery patterns.</p>
+                    <div class="text-xs text-gray-500">
+                        <i class="fa-solid fa-mobile-screen mr-1"></i> 24hr data retention (DPDP Act)
+                    </div>
+                </div>
+
+                <!-- Layer 6 -->
+                <div class="layer-card bg-slate-800 p-6 rounded-2xl border border-slate-700">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center font-black text-lg">6</div>
+                        <div class="text-sm font-bold text-orange-400 uppercase">ARCE + XGBoost</div>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">Final Decision Engine</h3>
+                    <p class="text-sm text-gray-400 mb-4">Adaptive Risk Correlation Engine cross-checks zone history. XGBoost makes the final call.</p>
+                    <div class="flex gap-2">
+                        <span class="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">≥0.72: Approve</span>
+                        <span class="px-2 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded">0.55-0.72: Review</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="py-16 px-4 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">ML Dynamic Pricing Model</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Weekly premiums adjust based on hyper-local risk factors. Pay for your actual risk zone, not an average.</p>
+            </div>
+
+            <!-- Pricing Tiers -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <!-- Green Zone -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-green-200 shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-4 h-4 rounded-full bg-green-500"></div>
+                        <span class="text-sm font-bold text-green-600 uppercase">Green Zone</span>
+                    </div>
+                    <div class="mb-4">
+                        <span class="text-4xl font-black text-slate-900">₹37</span>
+                        <span class="text-gray-500">/week</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Safe areas with no water logging history</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Max Payout</span>
+                            <span class="font-bold">₹800</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Coverage</span>
+                            <span class="font-bold">84 hrs/wk</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Multiplier</span>
+                            <span class="font-bold text-green-600">27.6x</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <span class="inline-flex items-center gap-1 text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded">
+                            <i class="fa-solid fa-tag"></i> ₹2 OFF Base Rate
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Yellow Zone -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-yellow-200 shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-4 h-4 rounded-full bg-yellow-500"></div>
+                        <span class="text-sm font-bold text-yellow-600 uppercase">Yellow Zone</span>
+                    </div>
+                    <div class="mb-4">
+                        <span class="text-4xl font-black text-slate-900">₹39</span>
+                        <span class="text-gray-500">/week</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Standard coverage for moderate weather risk</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Max Payout</span>
+                            <span class="font-bold">₹1,200</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Coverage</span>
+                            <span class="font-bold">70 hrs/wk</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Multiplier</span>
+                            <span class="font-bold text-yellow-600">30.8x</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <span class="inline-flex items-center gap-1 text-xs font-bold text-gray-600 bg-gray-100 px-2 py-1 rounded">
+                            <i class="fa-solid fa-baseline"></i> Base Rate
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Orange Zone -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-orange-200 shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-4 h-4 rounded-full bg-orange-500"></div>
+                        <span class="text-sm font-bold text-orange-600 uppercase">Orange Zone</span>
+                    </div>
+                    <div class="mb-4">
+                        <span class="text-4xl font-black text-slate-900">₹45</span>
+                        <span class="text-gray-500">/week</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">High risk areas prone to weather disruption</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Max Payout</span>
+                            <span class="font-bold">₹1,800</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Coverage</span>
+                            <span class="font-bold">56 hrs/wk</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Multiplier</span>
+                            <span class="font-bold text-orange-600">40.0x</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <span class="inline-flex items-center gap-1 text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded">
+                            <i class="fa-solid fa-arrow-up"></i> +₹6 Risk Premium
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Red Zone -->
+                <div class="bg-white p-6 rounded-2xl border-2 border-red-200 shadow-sm">
+                    <div class="flex items-center gap-2 mb-4">
+                        <div class="w-4 h-4 rounded-full bg-red-500"></div>
+                        <span class="text-sm font-bold text-red-600 uppercase">Red Zone</span>
+                    </div>
+                    <div class="mb-4">
+                        <span class="text-4xl font-black text-slate-900">₹55</span>
+                        <span class="text-gray-500">/week</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-4">Severe weather zones with frequent disruption</p>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Max Payout</span>
+                            <span class="font-bold">₹2,500</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Coverage</span>
+                            <span class="font-bold">42 hrs/wk</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Multiplier</span>
+                            <span class="font-bold text-red-600">45.5x</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <span class="inline-flex items-center gap-1 text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded">
+                            <i class="fa-solid fa-arrow-up"></i> +₹16 Risk Premium
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ML Pricing Factors -->
+            <div class="bg-white p-8 rounded-2xl border border-orange-200">
+                <div class="flex items-center gap-3 mb-6">
+                    <i class="fa-solid fa-robot text-orange-500 text-2xl"></i>
+                    <h3 class="text-xl font-black text-slate-900">ML Pricing Factors</h3>
+                </div>
+                <p class="text-gray-600 mb-6">Premium dynamically adjusts weekly based on these hyper-local risk signals:</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="p-4 bg-blue-50 rounded-xl border border-blue-100">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-cloud-rain text-blue-500"></i>
+                            <span class="font-bold text-blue-700">Rain Forecast</span>
+                        </div>
+                        <p class="text-sm text-blue-600">+₹1-3 for predicted rainfall >5mm</p>
+                    </div>
+                    <div class="p-4 bg-purple-50 rounded-xl border border-purple-100">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-wind text-purple-500"></i>
+                            <span class="font-bold text-purple-700">AQI Level</span>
+                        </div>
+                        <p class="text-sm text-purple-600">+₹1-2 for poor air quality >150</p>
+                    </div>
+                    <div class="p-4 bg-orange-50 rounded-xl border border-orange-100">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-water text-orange-500"></i>
+                            <span class="font-bold text-orange-700">Water Logging</span>
+                        </div>
+                        <p class="text-sm text-orange-600">+₹4 for historical flooding</p>
+                    </div>
+                    <div class="p-4 bg-red-50 rounded-xl border border-red-100">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-bullhorn text-red-500"></i>
+                            <span class="font-bold text-red-700">Social Signals</span>
+                        </div>
+                        <p class="text-sm text-red-600">+₹2 for disruption signals >2</p>
+                    </div>
+                </div>
+                <div class="mt-6 p-4 bg-gray-50 rounded-xl">
+                    <p class="text-sm text-gray-600"><i class="fa-solid fa-info-circle mr-2"></i><strong>Maximum Cap:</strong> Premiums are capped at ₹75/week regardless of risk factors. No surprises, ever.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-black text-slate-900 mb-8 text-center">Technology Stack</h2>
+            <div class="grid md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <div class="text-center p-4">
+                    <i class="fa-brands fa-react text-4xl text-blue-500 mb-2"></i>
+                    <div class="font-bold">React Native</div>
+                    <div class="text-xs text-gray-500">Mobile App</div>
+                </div>
+                <div class="text-center p-4">
+                    <i class="fa-brands fa-python text-4xl text-yellow-600 mb-2"></i>
+                    <div class="font-bold">Python + Django</div>
+                    <div class="text-xs text-gray-500">ML Backend</div>
+                </div>
+                <div class="text-center p-4">
+                    <i class="fa-solid fa-database text-4xl text-green-600 mb-2"></i>
+                    <div class="font-bold">PostgreSQL</div>
+                    <div class="text-xs text-gray-500">Primary Database</div>
+                </div>
+                <div class="text-center p-4">
+                    <i class="fa-solid fa-bolt text-4xl text-yellow-500 mb-2"></i>
+                    <div class="font-bold">Redis</div>
+                    <div class="text-xs text-gray-500">Fast Cache</div>
+                </div>
+                <div class="text-center p-4">
+                    <i class="fa-brands fa-google text-4xl text-red-500 mb-2"></i>
+                    <div class="font-bold">Firebase</div>
+                    <div class="text-xs text-gray-500">Auth + Firestore</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 px-4 brand-orange">
+        <div class="max-w-4xl mx-auto text-center text-white">
+            <h2 class="text-3xl font-black mb-4">Ready to Protect Your Income?</h2>
+            <p class="text-lg mb-8 opacity-90">Join thousands of Q-Commerce delivery workers who never worry about rain anymore.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="worker_signup.html" class="px-8 py-4 bg-white text-orange-600 font-bold rounded-xl hover:bg-gray-100 transition-all">
+                    <i class="fa-solid fa-user-plus mr-2"></i> Sign Up Now
+                </a>
+                <a href="worker_login.html" class="px-8 py-4 bg-transparent border-2 border-white text-white font-bold rounded-xl hover:bg-white/10 transition-all">
+                    <i class="fa-solid fa-right-to-bracket mr-2"></i> Worker Login
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-gray-400 py-12 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <div class="brand-orange p-2 rounded-lg">
+                        <i class="fa-solid fa-shield-heart text-white text-sm"></i>
+                    </div>
+                    <span class="text-lg font-black text-white tracking-tight">VITA <span class="text-orange-brand">INSURATECH</span></span>
+                </div>
+                <p class="text-sm">Amrita Vishwa Vidyapeetham, Bengaluru • Dept. of Robotics & AI</p>
+                <p class="text-sm">&copy; 2026 VITA-INSURATECH. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

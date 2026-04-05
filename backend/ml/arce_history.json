@@ -4,8 +4,8 @@
     "risk_multiplier": 1.25
   },
   "ORANGE": {
-    "claims": 10,
-    "risk_multiplier": 1.1600000000000001
+    "claims": 13,
+    "risk_multiplier": 1.2200000000000002
   },
   "YELLOW": {
     "claims": 4,

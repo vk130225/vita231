@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker Onboarding | VITA-INSURATECH</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .brand-orange { background-color: #e65a28; }
+        .text-orange-brand { color: #e65a28; }
+        .step-inactive { display: none; }
+        .progress-bar { transition: width 0.4s ease; }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-900 min-h-screen flex flex-col">
+
+    <header class="bg-white py-4 px-6 border-b border-gray-100 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="brand-orange p-1.5 rounded-lg">
+                <i class="fa-solid fa-shield-heart text-white text-sm"></i>
+            </div>
+            <span class="text-lg font-black tracking-tight">VITA <span class="text-orange-brand">WORKER</span></span>
+        </div>
+        <a href="index.html" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></a>
+    </header>
+
+    <div class="w-full bg-gray-100 h-1.5">
+        <div id="progress" class="brand-orange h-full progress-bar" style="width: 25%;"></div>
+    </div>
+
+    <main class="flex-grow flex items-center justify-center p-4 md:p-8">
+        <div class="max-w-xl w-full bg-white rounded-3xl shadow-xl shadow-slate-200/60 p-8 border border-gray-100">
+            
+            <form id="onboardingForm" class="space-y-6">
+                
+                <div id="step1" class="step-content">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-extrabold text-slate-800">Identity & Contact</h2>
+                        <p class="text-sm text-gray-500">Create your VITA account credentials.</p>
+                    </div>
+                    
+                    <!-- Google Signup -->
+                    <div class="mb-6">
+                        <button type="button" onclick="handleGoogleSignup()" class="w-full py-3 bg-white border-2 border-gray-200 rounded-xl flex items-center justify-center gap-3 hover:border-orange-300 transition-all">
+                            <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="w-5 h-5">
+                            <span class="font-bold text-gray-700">Continue with Google</span>
+                        </button>
+                    </div>
+                    
+                    <div class="relative mb-6">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-200"></div>
+                        </div>
+                        <div class="relative flex justify-center text-xs">
+                            <span class="px-2 bg-white text-gray-400 font-medium">or sign up with phone</span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Full Name</label>
+                            <input type="text" id="fullName" placeholder="As per Aadhaar" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-orange-500 transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Phone Number</label>
+                            <div class="flex">
+                                <span class="bg-gray-100 border border-gray-200 border-r-0 rounded-l-xl px-3 py-3 text-gray-500">+91</span>
+                                <input type="tel" id="phone" placeholder="10-digit mobile number" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-r-xl focus:outline-none focus:border-orange-500 transition-all">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Create Password</label>
+                            <input type="password" id="password" placeholder="Min 6 characters" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-orange-500 transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Date of Birth</label>
+                            <input type="date" id="dob" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-600 focus:outline-none focus:border-orange-500">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="step2" class="step-content step-inactive">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-extrabold text-slate-800">Work Profile</h2>
+                        <p class="text-sm text-gray-500">Tell us about your delivery work.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Delivery Platform</label>
+                            <input type="text" id="platform" placeholder="e.g. Zepto, Blinkit, Swiggy" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-orange-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Primary City</label>
+                            <input type="text" id="city" placeholder="e.g. Bengaluru, Mumbai, Delhi" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-orange-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Delivery Zone</label>
+                            <input type="text" id="zone" placeholder="e.g. Koramangala / Indiranagar" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-orange-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Experience (Yrs)</label>
+                                <input type="number" id="experience" placeholder="Years" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-orange-500">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">Avg. Hours/Day</label>
+                                <input type="number" id="avgHours" placeholder="Hours" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-orange-500">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="step3" class="step-content step-inactive">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-extrabold text-slate-800">Payout & Plan</h2>
+                        <p class="text-sm text-gray-500">Dynamic premium based on your zone risk profile.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-4 rounded-2xl border border-green-200" id="greenTier">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                                <label class="text-[10px] font-black uppercase text-green-600">Green Zone - Lowest Risk</label>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-slate-700">Safe Area Discount</span>
+                                    <p class="text-[10px] text-gray-500">No water logging history</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-2xl font-black text-slate-800">₹37</span>
+                                    <span class="text-xs text-gray-400">/wk</span>
+                                    <p class="text-[10px] text-green-600 font-bold">₹2 OFF</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-orange-50 p-4 rounded-2xl border border-orange-100" id="yellowTier">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <label class="text-[10px] font-black uppercase text-orange-400">Yellow Zone - Base Risk</label>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-slate-700">Standard Coverage</span>
+                                    <p class="text-[10px] text-gray-500">Moderate weather risk</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-2xl font-black text-slate-800">₹39</span>
+                                    <span class="text-xs text-gray-400">/wk</span>
+                                    <p class="text-[10px] text-gray-400">Base Rate</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-orange-50 p-4 rounded-2xl border border-orange-200 hidden" id="orangeTier">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-3 h-3 rounded-full bg-orange-500"></div>
+                                <label class="text-[10px] font-black uppercase text-orange-600">Orange Zone - Elevated Risk</label>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-slate-700">High Risk Area</span>
+                                    <p class="text-[10px] text-gray-500">Weather disruption prone</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-2xl font-black text-slate-800">₹45</span>
+                                    <span class="text-xs text-gray-400">/wk</span>
+                                    <p class="text-[10px] text-orange-600 font-bold">+₹6</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-red-50 p-4 rounded-2xl border border-red-200 hidden" id="redTier">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <label class="text-[10px] font-black uppercase text-red-600">Red Zone - Maximum Risk</label>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-slate-700">Severe Weather Zone</span>
+                                    <p class="text-[10px] text-gray-500">Frequent income disruption</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-2xl font-black text-slate-800">₹55</span>
+                                    <span class="text-xs text-gray-400">/wk</span>
+                                    <p class="text-[10px] text-red-600 font-bold">+₹16</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 p-3 rounded-xl border border-blue-100">
+                            <div class="flex items-start gap-2">
+                                <i class="fa-solid fa-robot text-blue-500 mt-0.5"></i>
+                                <div>
+                                    <p class="text-xs font-bold text-blue-700">ML-Powered Dynamic Pricing</p>
+                                    <p class="text-[10px] text-blue-600">Premium adjusts weekly based on hyper-local risk factors: rain forecasting, AQI, water logging history, and social disruption signals.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-1">UPI ID for Auto-Payouts</label>
+                            <input type="text" id="upiId" placeholder="username@upi" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-orange-500 transition-all" oninput="validateUPI()">
+                            <p id="upiError" class="text-[10px] text-red-500 mt-1 hidden">Invalid UPI format. Use: username@bank (e.g., john@okicici)</p>
+                            <p id="upiSuccess" class="text-[10px] text-green-600 mt-1 hidden">Valid UPI format detected</p>
+                            <p class="text-[10px] text-gray-400 mt-1">Supported: @okicici, @okhdfcbank, @oksbi, @okaxis, @paytm, @ybl, @upi</p>
+                        </div>
+                        <div class="p-3 bg-gray-50 border border-gray-200 rounded-xl flex items-center gap-3">
+                            <i class="fa-solid fa-bolt-lightning text-orange-500"></i>
+                            <span class="text-sm font-bold text-gray-600">UPI Autopay Enabled</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="step4" class="step-content step-inactive">
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-extrabold text-slate-800">Compliance</h2>
+                        <p class="text-sm text-gray-500">Final mandatory consents.</p>
+                    </div>
+                    <div class="space-y-4 text-xs">
+                        <label class="flex gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer">
+                            <input type="checkbox" id="consent1" class="w-4 h-4 accent-orange-500">
+                            <span>Consent to <b>cellular location data</b> usage.</span>
+                        </label>
+                        <label class="flex gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer">
+                            <input type="checkbox" id="consent2" class="w-4 h-4 accent-orange-500">
+                            <span>Consent to <b>background sensor</b> collection.</span>
+                        </label>
+                        <label class="flex gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer">
+                            <input type="checkbox" id="consent3" class="w-4 h-4 accent-orange-500">
+                            <span>Agree to 24-hour data retention policy.</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 pt-4">
+                    <button type="button" id="prevBtn" class="hidden w-1/3 py-4 bg-gray-100 text-gray-500 font-bold rounded-2xl hover:bg-gray-200 transition-all">Back</button>
+                    <button type="button" id="nextBtn" class="flex-grow py-4 brand-orange text-white font-bold rounded-2xl shadow-lg shadow-orange-200 hover:scale-[1.01] transition-all">Continue</button>
+                </div>
+
+            </form>
+        </div>
+    </main>
+
+    <footer class="py-6 text-center">
+        <p class="text-[10px] text-gray-400 font-black uppercase tracking-[0.2em]">&copy; 2026 VITA Insurance • Secured via Firestore</p>
+    </footer>
+
+    <script>
+        const steps = ['step1', 'step2', 'step3', 'step4'];
+        let currentStep = 0;
+
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const progress = document.getElementById('progress');
+
+        nextBtn.addEventListener('click', async () => {
+            if (currentStep < steps.length - 1) {
+                document.getElementById(steps[currentStep]).classList.add('step-inactive');
+                currentStep++;
+                document.getElementById(steps[currentStep]).classList.remove('step-inactive');
+                updateUI();
+            } else {
+                // --- INTEGRATION WITH PYTHON API ---
+                // Validate required fields first
+                const fullName = document.getElementById('fullName').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const password = document.getElementById('password').value.trim();
+                const upiId = document.getElementById('upiId').value.trim();
+                
+                if (!fullName) {
+                    alert("Please enter your Full Name in Step 1");
+                    currentStep = 0;
+                    document.getElementById('step4').classList.add('step-inactive');
+                    document.getElementById('step1').classList.remove('step-inactive');
+                    updateUI();
+                    return;
+                }
+                if (!phone || phone.length < 10) {
+                    alert("Please enter a valid 10-digit Phone Number in Step 1");
+                    currentStep = 0;
+                    document.getElementById('step4').classList.add('step-inactive');
+                    document.getElementById('step1').classList.remove('step-inactive');
+                    updateUI();
+                    return;
+                }
+                if (!password || password.length < 6) {
+                    alert("Please enter a Password (min 6 characters) in Step 1");
+                    currentStep = 0;
+                    document.getElementById('step4').classList.add('step-inactive');
+                    document.getElementById('step1').classList.remove('step-inactive');
+                    updateUI();
+                    return;
+                }
+                if (!upiId) {
+                    alert("Please enter your UPI ID in Step 3");
+                    currentStep = 2;
+                    document.getElementById('step4').classList.add('step-inactive');
+                    document.getElementById('step3').classList.remove('step-inactive');
+                    updateUI();
+                    return;
+                }
+
+                nextBtn.disabled = true;
+                nextBtn.innerText = "Saving to Database...";
+
+                const workerData = {
+                    fullName: document.getElementById('fullName').value,
+                    phone: document.getElementById('phone').value,
+                    password: document.getElementById('password').value,
+                    dob: document.getElementById('dob').value,
+                    platform: document.getElementById('platform').value,
+                    city: document.getElementById('city').value,
+                    zone: document.getElementById('zone').value,
+                    experience: document.getElementById('experience').value,
+                    avgHours: document.getElementById('avgHours').value,
+                    upiId: document.getElementById('upiId').value,
+                    status: "active",
+                    weeksCovered: 1,
+                    trustScore: 500,
+                    payoutsReceived: 0,
+                    signupDate: new Date().toISOString()
+                };
+
+                try {
+                    const response = await fetch('http://localhost:8000/api/signup', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(workerData)
+                    });
+
+                    console.log('Response status:', response.status);
+                    const responseData = await response.json();
+                    console.log('Response data:', responseData);
+
+                    if (response.ok) {
+                        // Success View with auto-redirect
+                        document.getElementById('onboardingForm').innerHTML = `
+                            <div class="text-center py-10">
+                                <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                                    <i class="fa-solid fa-check text-4xl"></i>
+                                </div>
+                                <h2 class="text-2xl font-black text-slate-800">Account Verified</h2>
+                                <p class="text-sm text-gray-500 mt-2">Your data is secured in Google Firestore.</p>
+                                <p class="text-sm text-orange-500 mt-4">Redirecting to dashboard...</p>
+                                <button onclick="window.location.href='workers_dashboard.html'" class="mt-4 w-full py-4 brand-orange text-white font-bold rounded-2xl shadow-lg">
+                                    Go to Dashboard Now
+                                </button>
+                            </div>`;
+                        
+                        // Auto-redirect after 2 seconds
+                        setTimeout(() => {
+                            window.location.href = 'workers_dashboard.html';
+                        }, 2000);
+                    } else {
+                        console.error('Signup error:', responseData);
+                        alert(`Error: ${responseData.error || JSON.stringify(responseData)}`);
+                        nextBtn.disabled = false;
+                        nextBtn.innerText = "Accept & Finish";
+                    }
+                } catch (err) {
+                    console.error('Fetch error:', err);
+                    alert("Connection failed: " + err.message);
+                    nextBtn.disabled = false;
+                    nextBtn.innerText = "Accept & Finish";
+                }
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 0) {
+                document.getElementById(steps[currentStep]).classList.add('step-inactive');
+                currentStep--;
+                document.getElementById(steps[currentStep]).classList.remove('step-inactive');
+                updateUI();
+            }
+        });
+
+        function updateUI() {
+            progress.style.width = ((currentStep + 1) / steps.length) * 100 + '%';
+            if (currentStep === 0) prevBtn.classList.add('hidden');
+            else prevBtn.classList.remove('hidden');
+            if (currentStep === steps.length - 1) nextBtn.innerText = 'Accept & Finish';
+            else nextBtn.innerText = 'Continue';
+        }
+
+        // UPI ID Validation
+        function validateUPI() {
+            const upiInput = document.getElementById('upiId');
+            const upiError = document.getElementById('upiError');
+            const upiSuccess = document.getElementById('upiSuccess');
+            const upiValue = upiInput.value.trim();
+            
+            // Valid UPI patterns
+            const validProviders = ['okicici', 'okhdfcbank', 'oksbi', 'okaxis', 'paytm', 'ybl', 'upi', 'ibl', 'axl', 'apl', 'yapl', 'payzapp'];
+            const upiPattern = new RegExp(`^[a-zA-Z0-9._-]+@(${validProviders.join('|')})$`);
+            
+            if (upiValue === '') {
+                upiError.classList.add('hidden');
+                upiSuccess.classList.add('hidden');
+                upiInput.classList.remove('border-red-500', 'border-green-500');
+                return;
+            }
+            
+            if (upiPattern.test(upiValue)) {
+                upiError.classList.add('hidden');
+                upiSuccess.classList.remove('hidden');
+                upiInput.classList.remove('border-red-500');
+                upiInput.classList.add('border-green-500');
+            } else {
+                upiError.classList.remove('hidden');
+                upiSuccess.classList.add('hidden');
+                upiInput.classList.remove('border-green-500');
+                upiInput.classList.add('border-red-500');
+            }
+        }
+
+        // Google Signup Handler
+        function handleGoogleSignup() {
+            // Simulate Google OAuth flow
+            const googleBtn = document.querySelector('button[onclick="handleGoogleSignup()"]');
+            googleBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Connecting...';
+            googleBtn.disabled = true;
+            
+            setTimeout(() => {
+                // Mock successful Google authentication
+                const mockGoogleData = {
+                    fullName: 'Alex Kumar',
+                    email: 'alex.kumar@gmail.com',
+                    googleId: 'goog_123456789'
+                };
+                
+                // Pre-fill the form
+                document.getElementById('fullName').value = mockGoogleData.fullName;
+                
+                // Show success toast
+                alert('Google account connected successfully! Form pre-filled.');
+                
+                googleBtn.innerHTML = '<i class="fa-solid fa-check text-green-600"></i> Connected';
+                googleBtn.classList.add('border-green-500', 'bg-green-50');
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

@@ -45,9 +45,14 @@ const VITA = (() => {
           </div>
           <div id="api-status-dot"></div>
         </div>
-        <button onclick="VITA.checkAPI()" class="btn-ghost" style="width:100%;font-size:0.65rem;padding:0.35rem;">
-          <i class="fa-solid fa-rotate"></i> Refresh Connection
-        </button>
+        <div style="display:flex;gap:0.5rem;">
+          <button onclick="VITA.checkAPI()" class="btn-ghost" style="flex:1;font-size:0.65rem;padding:0.35rem;">
+            <i class="fa-solid fa-rotate"></i> Refresh
+          </button>
+          <a href="worker_login.html" class="btn-ghost" style="flex:1;font-size:0.65rem;padding:0.35rem;text-align:center;text-decoration:none;color:inherit;">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+          </a>
+        </div>
       </div>
     `;
   }
