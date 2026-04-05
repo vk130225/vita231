@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VITA · Live Pipeline</title>
+  <link rel="stylesheet" href="/static/vita.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .pipeline-grid { display:grid; grid-template-columns:320px 1fr; gap:1rem; }
+    @media(max-width:900px){.pipeline-grid{grid-template-columns:1fr;}}
+    .sensor-chip {
+      background:#f8fafc; border:1px solid #e8eaed; border-radius:0.75rem;
+      padding:0.625rem 0.875rem; text-align:center;
+    }
+    .sensor-chip .val { font-family:'JetBrains Mono',monospace; font-size:1.125rem; font-weight:700; color:#0f172a; }
+    .sensor-chip .lbl { font-size:0.55rem; font-weight:900; color:#94a3b8; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:2px; }
+  </style>
+</head>
+<body>
+<div id="sidebar"></div>
+<div id="main">
+  <div id="topbar"></div>
+  <div id="page-content">
+
+    <div class="fade-up" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
+      <div>
+        <h1 style="font-size:1.25rem;font-weight:900;">Live Pipeline</h1>
+        <p style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">6-layer fraud detection · Real-time ARCE evaluation</p>
+      </div>
+      <button class="btn-primary" id="run-btn" onclick="runPipeline()">
+        <i class="fa-solid fa-bolt"></i> Run Full Evaluation
+      </button>
+    </div>
+
+    <div class="pipeline-grid fade-up">
+      <!-- Dark pipeline card -->
+      <div class="dark-card">
+        <div class="card-title">Execution Log</div>
+        <div id="pipe-steps" style="display:flex;flex-direction:column;gap:2px;min-height:220px;">
+          <p style="color:#334155;font-size:0.75rem;font-style:italic;">Click "Run Full Evaluation" to start.</p>
+        </div>
+        <!-- ARCE ring -->
+        <div style="margin-top:1.25rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:1rem;padding:1.25rem;">
+          <div style="font-size:0.55rem;font-weight:800;color:#64748b;text-transform:uppercase;text-align:center;margin-bottom:0.75rem;">ARCE Score</div>
+          <div style="display:flex;align-items:center;gap:1rem;justify-content:center;">
+            <svg width="90" height="90" viewBox="0 0 90 90">
+              <circle cx="45" cy="45" r="36" fill="none" stroke="#1e293b" stroke-width="7"/>
+              <circle id="score-ring" cx="45" cy="45" r="36" fill="none" stroke="#e65a28" stroke-width="7"
+                stroke-linecap="round" stroke-dasharray="226.2" stroke-dashoffset="226.2"
+                transform="rotate(-90 45 45)" class="score-ring-fill"/>
+              <text x="45" y="51" text-anchor="middle" font-family="JetBrains Mono" font-size="16" font-weight="700" fill="white" id="score-text">—</text>
+            </svg>
+            <div>
+              <div style="font-size:0.6rem;color:#64748b;font-weight:800;text-transform:uppercase;">Decision</div>
+              <div id="r-decision" style="font-size:1.25rem;font-weight:900;color:white;">—</div>
+              <div style="font-size:0.6rem;color:#64748b;font-weight:800;text-transform:uppercase;margin-top:0.5rem;">Risk</div>
+              <div id="r-risk" style="font-weight:900;color:#94a3b8;">—</div>
+              <div style="font-size:0.6rem;color:#64748b;font-weight:800;text-transform:uppercase;margin-top:0.5rem;">Payout</div>
+              <div id="r-payout" style="font-size:1.75rem;font-weight:900;color:white;" class="mono">₹—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: sensor values + extras -->
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <!-- Sensor readings -->
+        <div class="card card-pad">
+          <div class="card-title">Sensor Inputs (last evaluation)</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.625rem;" id="sensor-grid">
+            <div class="sensor-chip"><div class="lbl">Rain mm/hr</div><div class="val" id="sv-rain">—</div></div>
+            <div class="sensor-chip"><div class="lbl">AQI</div><div class="val" id="sv-aqi">—</div></div>
+            <div class="sensor-chip"><div class="lbl">Temp °C</div><div class="val" id="sv-temp">—</div></div>
+            <div class="sensor-chip"><div class="lbl">Movement</div><div class="val" id="sv-mov">—</div></div>
+            <div class="sensor-chip"><div class="lbl">Activity</div><div class="val" id="sv-act">—</div></div>
+            <div class="sensor-chip"><div class="lbl">Sensor Score</div><div class="val" id="sv-ssc">—</div></div>
+            <div class="sensor-chip"><div class="lbl">Engine Score</div><div class="val" id="sv-eng">—</div></div>
+            <div class="sensor-chip"><div class="lbl">SVM Flag</div><div class="val" id="sv-svm">—</div></div>
+            <div class="sensor-chip"><div class="lbl">Cluster Flag</div><div class="val" id="sv-cl">—</div></div>
+          </div>
+        </div>
+
+        <!-- Claims history table -->
+        <div class="card" style="overflow:hidden;">
+          <div style="padding:1rem 1.25rem;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;">
+            <div class="card-title" style="margin-bottom:0;">Recent Evaluations</div>
+            <button class="btn-ghost" onclick="loadHistory()" style="padding:0.3rem 0.75rem;font-size:0.65rem;">
+              <i class="fa-solid fa-rotate"></i> Refresh
+            </button>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="vita-table">
+              <thead>
+                <tr>
+                  <th>Time</th><th>Zone</th><th>Rain</th><th>AQI</th>
+                  <th>Score</th><th>Risk</th><th>Decision</th>
+                </tr>
+              </thead>
+              <tbody id="hist-body">
+                <tr><td colspan="7" style="text-align:center;padding:1.5rem;color:#94a3b8;">Run an evaluation to populate data.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="toast-wrap"></div>
+<script src="/static/vita.js"></script> 
+<script>
+VITA.init({ page: 'pipeline' }).then(loadHistory);
+
+const LAYER_NAMES = ['','Weather Confirmation','GPS Zone Verification','Network Triangulation','Anti-Fraud (SVM+DBSCAN)','Sensor Activity','Platform Handshake'];
+
+function resetPipelineUI() {
+  document.getElementById('pipe-steps').innerHTML = LAYER_NAMES.slice(1).map((n,i) => `
+    <div class="pipe-step" id="ps-${i+1}">
+      <div class="pipe-step-icon" style="color:#334155;font-size:0.5rem;"><i class="fa-solid fa-circle"></i></div>
+      <div class="pipe-step-body"><div class="pipe-step-name">${n}</div></div>
+    </div>
+    ${i<5?'<div class="pipe-connector" id="pc-'+(i+1)+'"></div>':''}
+  `).join('');
+  const ring = document.getElementById('score-ring');
+  if (ring) ring.style.strokeDashoffset = '226.2';
+  ['score-text','r-decision','r-risk','r-payout'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = id==='r-payout'?'₹—':'—';
+  });
+}
+
+function updateStep(data) {
+  const el = document.getElementById(`ps-${data.layer}`);
+  if (!el) return;
+  const icons = {PASS:'circle-check',FAIL:'circle-xmark',WARN:'triangle-exclamation'};
+  const cols  = {PASS:'#22c55e',FAIL:'#ef4444',WARN:'#eab308'};
+  el.innerHTML = `
+    <div class="pipe-step-icon" style="color:${cols[data.status]||'#94a3b8'};"><i class="fa-solid fa-${icons[data.status]||'circle'}"></i></div>
+    <div class="pipe-step-body">
+      <div class="pipe-step-name" style="color:#e2e8f0;">${data.name}</div>
+      <div class="pipe-step-detail">${data.detail}</div>
+    </div>`;
+  const conn = document.getElementById(`pc-${data.layer}`);
+  if (conn) conn.className = `pipe-connector ${data.status==='PASS'?'done':'fail'}`;
+  // Set next step as running
+  const next = document.getElementById(`ps-${data.layer+1}`);
+  if (next) {
+    const nameEl = next.querySelector('.pipe-step-name');
+    if (nameEl) {
+      next.querySelector('.pipe-step-icon').innerHTML = '<i class="fa-solid fa-spinner fa-spin" style="color:#e65a28;"></i>';
+      nameEl.style.color = '#cbd5e1';
+    }
+  }
+}
+
+function setResult(d) {
+  VITA.updateScoreRing('score-ring','score-text', d.arce_score, 226.2);
+  document.getElementById('r-decision').textContent = d.decision;
+  document.getElementById('r-decision').style.color = d.decision==='APPROVED'?'#22c55e':'#ef4444';
+  document.getElementById('r-risk').textContent    = d.risk_level;
+  document.getElementById('r-payout').textContent  = d.payout>0?`₹${d.payout}`:'₹0';
+  if (d.engine_score !== undefined) document.getElementById('sv-eng').textContent = d.engine_score;
+  if (d.sensor_score !== undefined) document.getElementById('sv-ssc').textContent = d.sensor_score;
+}
+
+async function runPipeline() {
+  const btn = document.getElementById('run-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Running...';
+  resetPipelineUI();
+  VITA.toast('Pipeline started...', 'info');
+  const zone = VITA.getZone();
+
+  VITA.streamPipeline(zone,
+    (step) => {
+      updateStep(step);
+      // Populate sensor values from step details
+      if (step.layer===1) {
+        const m = step.detail.match(/Rain:([\d.]+).*AQI:([\d.]+).*Temp:([\d.]+)/);
+        if(m){ document.getElementById('sv-rain').textContent=m[1]; document.getElementById('sv-aqi').textContent=m[2]; document.getElementById('sv-temp').textContent=m[3]; }
+      }
+      if (step.layer===4) {
+        document.getElementById('sv-svm').textContent = step.detail.includes('SVM:FLAGGED')?'⚠ FLAGGED':'✓ OK';
+        document.getElementById('sv-cl').textContent  = step.detail.includes('DBSCAN:FLAGGED')?'⚠ FLAGGED':'✓ OK';
+      }
+      if (step.layer===5) {
+        const m = step.detail.match(/Activity:([\d.]+)/);
+        if(m) document.getElementById('sv-act').textContent = m[1]+'%';
+      }
+    },
+    (result) => {
+      setResult(result);
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-bolt"></i> Run Full Evaluation';
+      VITA.toast(`ARCE <b>${result.decision}</b> · Score ${result.arce_score}`, result.decision==='APPROVED'?'success':'error');
+      loadHistory();
+    },
+    () => {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fa-solid fa-bolt"></i> Run Full Evaluation';
+      VITA.toast('Pipeline error — is backend running?', 'error');
+    }
+  );
+}
+
+async function loadHistory() {
+  const data = await VITA.api('/api/claims/history?limit=12');
+  const tbody = document.getElementById('hist-body');
+  if (!data || !data.claims.length) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:1.5rem;color:#94a3b8;">No claims yet.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = data.claims.map(c => {
+    const t = c.timestamp ? new Date(c.timestamp).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit'}) : '—';
+    const dec = c.reported_outcome || (c.label===1?'APPROVED':'REJECTED');
+    const score = c.arce_score ?? '—';
+    return `<tr>
+      <td class="mono">${t}</td>
+      <td>${VITA.chip(c.zone||'—')}</td>
+      <td class="mono">${Number(c.rain||0).toFixed(1)}</td>
+      <td class="mono">${Number(c.aqi||0).toFixed(0)}</td>
+      <td class="mono" style="font-weight:900;color:${score>=0.7?'#16a34a':score>=0.5?'#ca8a04':'#dc2626'}">${score}</td>
+      <td>${VITA.chip(c.risk_level||'—')}</td>
+      <td>${VITA.chip(dec)}</td>
+    </tr>`;
+  }).join('');
+}
+</script>
+</body>
+</html>

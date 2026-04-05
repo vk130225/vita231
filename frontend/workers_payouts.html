@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VITA · Payout History</title>
+  <link rel="stylesheet" href="/static/vita.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .payout-row {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1rem 1.25rem; background:white; border-radius:1rem;
+      border:1px solid #e8eaed; transition:box-shadow 0.15s;
+    }
+    .payout-row:hover { box-shadow:0 4px 16px rgba(0,0,0,0.07); }
+    .pay-icon { width:3rem; height:3rem; border-radius:0.875rem; display:flex; align-items:center; justify-content:center; font-size:1.125rem; flex-shrink:0; }
+    .summary-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1rem; }
+    @media(max-width:600px){ .summary-strip{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+<div id="sidebar"></div>
+<div id="main">
+  <div id="topbar"></div>
+  <div id="page-content">
+
+    <div class="fade-up" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
+      <div>
+        <h1 style="font-size:1.25rem;font-weight:900;">Payout History</h1>
+        <p style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">Automated UPI payouts · Detailed feed</p>
+      </div>
+      <button class="btn-ghost" onclick="loadPayouts()"><i class="fa-solid fa-rotate"></i> Refresh</button>
+    </div>
+
+    <!-- Summary strip -->
+    <div class="summary-strip fade-up">
+      <div class="card card-pad">
+        <div class="stat-label">Total Paid Out</div>
+        <div class="stat-value" id="sum-total">₹—</div>
+      </div>
+      <div class="card card-pad">
+        <div class="stat-label">Approved Claims</div>
+        <div class="stat-value" id="sum-approved">—</div>
+      </div>
+      <div class="card card-pad">
+        <div class="stat-label">Approval Rate</div>
+        <div class="stat-value" id="sum-rate">—</div>
+      </div>
+    </div>
+
+    <!-- Payout list -->
+    <div class="space-y-3 fade-up" id="payout-list">
+      <div style="height:4rem;border-radius:1rem;" class="shimmer"></div>
+      <div style="height:4rem;border-radius:1rem;" class="shimmer"></div>
+      <div style="height:4rem;border-radius:1rem;" class="shimmer"></div>
+    </div>
+
+  </div>
+</div>
+<div id="toast-wrap"></div>
+<script src="/static/vita.js"></script>
+<script>
+VITA.init({ page: 'payouts' }).then(loadPayouts);
+
+async function loadPayouts() {
+  const payData = await VITA.api('/api/payouts');
+
+  if (payData) {
+    document.getElementById('sum-total').textContent    = `₹${payData.total_paid_out.toLocaleString('en-IN')}`;
+    document.getElementById('sum-approved').textContent = payData.approved_claims;
+    document.getElementById('sum-rate').textContent     = payData.approval_rate + '%';
+  }
+
+  if (!payData) { VITA.toast('Failed to load payouts', 'error'); return; }
+
+  // Generate sample payout history
+  const history = [];
+  const zones = ['GREEN', 'YELLOW', 'ORANGE', 'RED'];
+  const events = ['Claim Approved', 'Quick Payout', 'Scheduled Payout'];
+  
+  for (let i = 0; i < 5; i++) {
+    const zone = zones[Math.floor(Math.random() * zones.length)];
+    const event = events[Math.floor(Math.random() * events.length)];
+    history.push({
+      id: 'CLM' + String(1000 + i).slice(-4),
+      event: event,
+      date: new Date(Date.now() - i*3600000).toLocaleDateString(),
+      zone: zone,
+      amount: 1200,
+      status: 'Completed',
+      color: 'green',
+      icon: 'check-circle'
+    });
+  }
+
+  const iconBg = {'green':'#f0fdf4','blue':'#eff6ff','orange':'#fff7ed','purple':'#faf5ff'};
+  const iconTx = {'green':'#16a34a','blue':'#1d4ed8','orange':'#ea580c','purple':'#7e22ce'};
+
+  document.getElementById('payout-list').innerHTML = history.map(p => `
+    <div class="payout-row">
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <div class="pay-icon" style="background:${iconBg[p.color]||'#f1f5f9'};color:${iconTx[p.color]||'#475569'};">
+          <i class="fa-solid fa-${p.icon}"></i>
+        </div>
+        <div>
+          <div style="font-size:0.9rem;font-weight:900;color:#0f172a;">${p.id} - ${p.event}</div>
+          <div style="font-size:0.65rem;color:#94a3b8;font-weight:700;text-transform:uppercase;margin-top:2px;">
+            ${p.date} - ${VITA.chip(p.zone)} Zone
+          </div>
+        </div>
+      </div>
+      <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
+        <div style="font-size:1.1rem;font-weight:900;font-family:'JetBrains Mono',monospace;">₹${p.amount.toLocaleString('en-IN')}</div>
+        <span class="chip chip-${p.status.toLowerCase()}">${p.status}</span>
+      </div>
+    </div>
+  `).join('');
+}
+</script>
+</body>
+</html>

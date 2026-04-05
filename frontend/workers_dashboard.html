@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VITA · Dashboard</title>
+  <link rel="stylesheet" href="/static/vita.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
+    @media(max-width:900px){.stat-grid{grid-template-columns:1fr 1fr;}}
+    .main-grid { display:grid; grid-template-columns:280px 1fr; gap:1rem; }
+    @media(max-width:900px){.main-grid{grid-template-columns:1fr;}}
+    .activity-row {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0.75rem 1rem; background:#f8fafc; border-radius:0.875rem;
+      border:1px solid #f0f0f0;
+    }
+    .activity-icon {
+      width:2.5rem; height:2.5rem; border-radius:0.75rem;
+      display:flex; align-items:center; justify-content:center; font-size:1rem;
+      flex-shrink:0;
+    }
+  </style>
+</head>
+<body>
+
+<div id="sidebar"></div>
+<div id="main">
+  <div id="topbar"></div>
+  <div id="page-content">
+
+    <div class="fade-up" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
+      <div>
+        <h1 style="font-size:1.25rem;font-weight:900;color:#0f172a;">Dashboard</h1>
+        <p style="font-size:0.75rem;color:#94a3b8;margin-top:2px;">Welcome back · Real-time overview</p>
+      </div>
+      <button class="btn-primary" onclick="runQuickARCE()">
+        <i class="fa-solid fa-bolt"></i> Quick ARCE Eval
+      </button>
+    </div>
+
+    <!-- Stat cards -->
+    <div class="stat-grid fade-up" style="margin-bottom:1rem;">
+      <div class="card card-pad">
+        <div class="stat-label">Weeks Covered</div>
+        <div class="stat-value" id="s-weeks">—</div>
+        <div style="font-size:0.65rem;color:#e65a28;margin-top:4px;font-weight:700;">🔥 Active streak</div>
+      </div>
+      <div class="card card-pad">
+        <div class="stat-label">Total Payouts</div>
+        <div class="stat-value mono" id="s-payouts">₹—</div>
+      </div>
+      <div class="card card-pad">
+        <div class="stat-label">Total Premiums</div>
+        <div class="stat-value mono" id="s-premiums">₹—</div>
+      </div>
+      <div class="card card-pad">
+        <div class="stat-label">Approval Rate</div>
+        <div class="stat-value" id="s-rate">—</div>
+      </div>
+    </div>
+
+    <div class="main-grid fade-up">
+      <!-- Pipeline mini -->
+      <div class="dark-card" style="display:flex;flex-direction:column;gap:1rem;">
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <div class="card-title" style="margin-bottom:0;">Live ARCE</div>
+          <a href="/pipeline"style="font-size:0.65rem;font-weight:800;color:#e65a28;text-decoration:none;">Full view →</a>
+        </div>
+        <div id="mini-pipeline" style="display:flex;flex-direction:column;gap:2px;">
+          <!-- steps injected by JS -->
+        </div>
+        <!-- Score ring -->
+        <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:1rem;padding:1rem;text-align:center;">
+          <div style="font-size:0.55rem;font-weight:800;color:#64748b;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.5rem;">ARCE Score</div>
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="32" fill="none" stroke="#1e293b" stroke-width="7" class="score-ring-track"/>
+            <circle id="score-ring" cx="40" cy="40" r="32" fill="none" stroke="#e65a28" stroke-width="7"
+              stroke-linecap="round" stroke-dasharray="201.1" stroke-dashoffset="201.1"
+              transform="rotate(-90 40 40)" class="score-ring-fill"/>
+            <text x="40" y="45" text-anchor="middle" font-family="JetBrains Mono" font-size="14" font-weight="700" fill="white" id="score-text">—</text>
+          </svg>
+          <div id="arce-dec"  style="font-size:0.75rem;font-weight:900;color:#94a3b8;margin-top:4px;">PENDING</div>
+          <div id="arce-pay"  style="font-size:1.5rem;font-weight:900;color:white;margin-top:2px;">₹—</div>
+        </div>
+      </div>
+
+      <!-- Right column -->
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        <!-- Coverage -->
+        <div class="card card-pad" style="display:flex;align-items:center;justify-content:space-between;">
+          <div style="display:flex;align-items:center;gap:1rem;">
+            <div style="width:3rem;height:3rem;border-radius:0.875rem;background:#f0fdf4;display:flex;align-items:center;justify-content:center;color:#16a34a;font-size:1.25rem;">
+              <i class="fa-solid fa-shield-check"></i>
+            </div>
+            <div>
+              <div style="font-size:1rem;font-weight:900;color:#0f172a;">Coverage Active</div>
+              <div style="font-size:0.75rem;color:#94a3b8;" id="cov-zone">— Tier · Bengaluru</div>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div class="stat-label">Weekly Premium</div>
+            <div style="font-size:1.25rem;font-weight:900;" id="cov-premium">₹—</div>
+          </div>
+        </div>
+
+        <!-- Zone bars -->
+        <div class="card card-pad">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+            <div class="card-title" style="margin-bottom:0;">Claims by Zone</div>
+            <span style="font-size:0.7rem;font-weight:900;background:#f1f5f9;padding:0.2rem 0.6rem;border-radius:99px;" id="total-claims">— claims</span>
+          </div>
+          <div id="zone-bars" style="display:flex;align-items:flex-end;gap:0.5rem;height:80px;">
+            <div style="flex:1;background:#f1f5f9;border-radius:0.25rem;height:100%;"></div>
+            <div style="flex:1;background:#f1f5f9;border-radius:0.25rem;height:80%;"></div>
+            <div style="flex:1;background:#f1f5f9;border-radius:0.25rem;height:60%;"></div>
+            <div style="flex:1;background:#f1f5f9;border-radius:0.25rem;height:40%;"></div>
+          </div>
+          <div style="display:flex;gap:0.5rem;margin-top:0.4rem;">
+            <span style="flex:1;font-size:0.55rem;font-weight:800;color:#16a34a;text-align:center;">GREEN</span>
+            <span style="flex:1;font-size:0.55rem;font-weight:800;color:#ca8a04;text-align:center;">YELLOW</span>
+            <span style="flex:1;font-size:0.55rem;font-weight:800;color:#ea580c;text-align:center;">ORANGE</span>
+            <span style="flex:1;font-size:0.55rem;font-weight:800;color:#dc2626;text-align:center;">RED</span>
+          </div>
+        </div>
+
+        <!-- Recent activity -->
+        <div class="card card-pad">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem;">
+            <div class="card-title" style="margin-bottom:0;">Recent Activity</div>
+            <a href="workers_payouts.html" style="font-size:0.65rem;font-weight:800;color:#e65a28;text-decoration:none;">See all →</a>
+          </div>
+          <div id="recent-activity" class="space-y-3">
+            <div style="height:3.5rem;border-radius:0.875rem;" class="shimmer"></div>
+            <div style="height:3.5rem;border-radius:0.875rem;" class="shimmer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /page-content -->
+</div><!-- /main -->
+
+<div id="toast-wrap"></div>
+<script src="/static/vita.js"></script>
+<script>
+VITA.init({ page: 'dashboard' }).then(() => {
+  loadDashboard();
+  setInterval(loadDashboard, 15000);
+});
+
+async function loadDashboard() {
+  const [worker, stats] = await Promise.all([
+    VITA.api('/api/worker/AK001'),
+    VITA.api('/api/claims/stats'),
+  ]);
+  if (worker) {
+    document.getElementById('s-weeks').textContent    = worker.weeks_covered;
+    document.getElementById('s-payouts').textContent  = `₹${worker.total_payouts.toLocaleString('en-IN')}`;
+    document.getElementById('s-premiums').textContent = `₹${worker.total_premiums.toLocaleString('en-IN')}`;
+    document.getElementById('cov-zone').textContent   = `${worker.zone} Tier · Bengaluru Urban`;
+    document.getElementById('cov-premium').textContent = `₹${worker.weekly_premium}`;
+  }
+  if (stats) {
+    document.getElementById('s-rate').textContent   = stats.approval_rate + '%';
+    document.getElementById('total-claims').textContent = `${stats.total_claims} claims`;
+    renderBars(stats.by_zone);
+  }
+  await loadActivity();
+  renderMiniPipeline();
+}
+
+function renderBars(byZone) {
+  const colors = {GREEN:'#22c55e',YELLOW:'#eab308',ORANGE:'#f97316',RED:'#ef4444'};
+  const max = Math.max(...Object.values(byZone), 1);
+  document.getElementById('zone-bars').innerHTML = Object.entries(byZone).map(([z,c]) =>
+    `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;">
+      <span style="font-size:0.6rem;font-weight:900;color:${colors[z]};">${c}</span>
+      <div style="width:100%;border-radius:4px 4px 0 0;background:${colors[z]};opacity:0.75;height:${Math.max((c/max)*70,4)}px;transition:height 0.7s ease;"></div>
+    </div>`).join('');
+}
+
+async function loadActivity() {
+  const data = await VITA.api('/api/payouts/recent?limit=3');
+  if (!data) return;
+  const iconBg = {green:'#f0fdf4',blue:'#eff6ff',orange:'#fff7ed',purple:'#faf5ff'};
+  const iconTx = {green:'#16a34a',blue:'#1d4ed8',orange:'#ea580c',purple:'#7e22ce'};
+  document.getElementById('recent-activity').innerHTML = data.payouts.map(p => `
+    <div class="activity-row">
+      <div style="display:flex;align-items:center;gap:0.75rem;">
+        <div class="activity-icon" style="background:${iconBg[p.color]||'#f1f5f9'};color:${iconTx[p.color]||'#475569'};">
+          <i class="fa-solid fa-${p.icon}"></i>
+        </div>
+        <div>
+          <div style="font-size:0.8125rem;font-weight:900;">₹${p.amount} — ${p.event}</div>
+          <div style="font-size:0.6rem;color:#94a3b8;font-weight:700;text-transform:uppercase;">${p.date} · ${p.zone}</div>
+        </div>
+      </div>
+      <span class="chip chip-${p.status}">${p.status}</span>
+    </div>
+  `).join('');
+}
+
+function renderMiniPipeline() {
+  const steps = ['Weather','GPS Verify','Triangulation','Anti-Fraud','Sensors','Platform'];
+  document.getElementById('mini-pipeline').innerHTML = steps.map((s,i) => `
+    <div class="pipe-step">
+      <div class="pipe-step-icon" style="color:#334155;"><i class="fa-solid fa-circle" style="font-size:0.5rem;"></i></div>
+      <div class="pipe-step-name">${s}</div>
+    </div>
+    ${i<steps.length-1 ? '<div class="pipe-connector"></div>' : ''}
+  `).join('');
+}
+
+async function runQuickARCE() {
+  const zone = VITA.getZone();
+  VITA.toast(`Running ARCE for <b>${zone}</b>...`, 'info');
+  // Animate pipeline
+  const steps = ['Weather','GPS Verify','Triangulation','Anti-Fraud','Sensors','Platform'];
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i >= steps.length) { clearInterval(interval); return; }
+    const panel = document.getElementById('mini-pipeline');
+    const rows = panel.querySelectorAll('.pipe-step');
+    if (rows[i]) {
+      rows[i].querySelector('.pipe-step-icon').innerHTML = '<i class="fa-solid fa-circle-check" style="color:#22c55e;font-size:0.875rem;"></i>';
+      if (rows[i-1]) {
+        const conn = rows[i-1].nextElementSibling;
+        if (conn && conn.classList.contains('pipe-connector')) conn.classList.add('done');
+      }
+    }
+    i++;
+  }, 1000);
+
+  const result = await VITA.api(`/api/arce/evaluate?zone=${zone}&worker_id=AK001`);
+  clearInterval(interval);
+  if (!result) { VITA.toast('ARCE failed — backend error', 'error'); return; }
+  const arce = result.arce_result;
+  VITA.updateScoreRing('score-ring', 'score-text', arce.arce_score, 201.1);
+  document.getElementById('arce-dec').textContent = arce.decision;
+  document.getElementById('arce-dec').style.color = arce.decision==='APPROVED' ? '#22c55e' : '#ef4444';
+  document.getElementById('arce-pay').textContent = result.payout_amount > 0 ? `₹${result.payout_amount}` : '—';
+  const t = arce.decision==='APPROVED'?'success':'error';
+  VITA.toast(`ARCE <b>${arce.decision}</b> · Score ${arce.arce_score} · Risk ${arce.risk_level}`, t);
+  await loadDashboard();
+}
+</script>
+</body>
+</html>
