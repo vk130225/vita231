@@ -2,6 +2,13 @@
 
 This backend implements the claim processing and fraud detection pipeline for VITA-INSURATECH.
 
+## Frontend Connection
+The backend serves the frontend application at:
+- **Frontend URL:** http://localhost:3000
+- **Backend API:** http://localhost:8000
+
+The frontend HTML files are located in `../frontend/` and make API calls to this backend.
+
 ## Features
 - FastAPI backend with claim, weather, payout, and secure auth endpoints
 - One-Class SVM + DBSCAN + XGBoost inference pipeline
