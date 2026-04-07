@@ -1,84 +1,43 @@
-# VITA-INSURATECH - Complete Insurance Platform
+# VITA INSURATECH Backend
 
-## 🚀 **Access Your Website**
+This backend implements the claim processing and fraud detection pipeline for VITA-INSURATECH.
 
-**Main Website:** [http://localhost:3000](http://localhost:3000)
+## Features
+- FastAPI backend with claim, weather, payout, and secure auth endpoints
+- One-Class SVM + DBSCAN + XGBoost inference pipeline
+- Adaptive ARCE risk scoring with persistent zone history
+- Live weather/AQI integration with multi-source consensus
+- Optional Twitter/X social disruption signal
+- Razorpay payout integration via environment-configurable credentials
+- Claim persistence and auto-retraining on every claim
 
-## 📋 **System Overview**
+## Setup
+1. Create a Python 3.10+ virtual environment.
+2. Install dependencies:
 
-Your complete VITA-INSURATECH platform includes:
-
-### **Frontend (User Interface)**
-- **URL:** http://localhost:3000
-- **Technology:** Next.js with TypeScript & Tailwind CSS
-- **Features:** Login, Dashboard, Claims, Pricing, Portfolio
-
-### **Backend (API Services)**
-- **URL:** http://localhost:8001
-- **Technology:** FastAPI with Python
-- **Features:** ML Models, Fraud Detection, Real-time APIs
-
-## 🎯 **Quick Start Guide**
-
-### **1. Access the Website**
-Visit: **http://localhost:3000**
-
-### **2. Explore Features**
-- **🏠 Landing Page:** Company overview and features
-- **🔐 Login:** Authentication (currently demo mode)
-- **📊 Dashboard:** Worker overview and claims history
-- **💰 Dynamic Pricing:** Interactive premium calculator
-- **📈 Portfolio:** Real-time stock market tracking
-- **📝 Claim Submission:** AI-powered claim processing
-
-### **3. Test Backend APIs**
 ```bash
-# Health check
-curl http://localhost:8001/health
-
-# Test claim processing
-curl -X POST http://localhost:8001/claim \
-  -H "Content-Type: application/json" \
-  -d '{"lat": 12.9716, "lon": 77.5946, "movement": 80, "activity": 75, "location_valid": 1}'
+pip install -r requirements.txt
 ```
 
-## 🔧 **Technical Details**
+3. Copy `.env.example` to `.env` and fill in your API keys.
+4. Optionally place your Firebase service account JSON at `firebase_key.json` or set `FIREBASE_KEY_PATH`.
 
-### **Real Integrations Active:**
-- 🌤️ **Weather Data:** Open-Meteo + WeatherAPI
-- 🌫️ **Air Quality:** WAQI API
-- 🐦 **Social Signals:** Twitter API
-- 📊 **Stock Market:** Finnhub API (Real-time data)
-- 💳 **Payments:** Razorpay UPI
-- 🔐 **Authentication:** Firebase ready
+## Run
+From the `backend` folder:
 
-### **AI/ML Features:**
-- 6-layer fraud detection pipeline
-- Auto-retraining on every claim
-- ARCE adaptive risk scoring
-- Zone intelligence mapping
-- Dynamic pricing based on risk factors
+```bash
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
 
-## 📱 **User Journey**
+## Important Environment Variables
+- `WEATHER_API_KEY`
+- `AQI_API_KEY`
+- `TWITTER_BEARER_TOKEN`
+- `FIREBASE_KEY_PATH`
+- `RAZORPAY_KEY_ID`
+- `RAZORPAY_KEY_SECRET`
+- `RAZORPAY_DEFAULT_VPA`
 
-1. **Visit Website** → http://localhost:3000
-2. **Explore Landing** → See features and benefits
-3. **Login** → Access worker dashboard
-4. **Check Portfolio** → View stock investments
-5. **Calculate Pricing** → See dynamic premiums
-6. **Submit Claim** → AI validation with real data
-7. **Monitor Status** → Track claims and earnings
-
-## 🎨 **Design Features**
-
-- **Responsive Design:** Works on all devices
-- **Smooth Animations:** Professional transitions
-- **Real-time Updates:** Live data integration
-- **Interactive Elements:** Sliders, forms, charts
-- **Modern UI:** Clean, insurance-industry appropriate
-
----
-
-**🎉 Your VITA-INSURATECH platform is live and ready for testing!**
-
-**Main Access Link:** [http://localhost:3000](http://localhost:3000)
+## Notes
+- The backend uses a local claim store at `ml/claim_store.json` and ARCE history at `ml/arce_history.json`.
+- If model artifacts are missing, the system will initialize training from synthetic data.
